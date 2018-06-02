@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,6 +31,8 @@ namespace MyLenses
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            if (Settings.Default.Theme == "Light") this.RequestedTheme = ApplicationTheme.Light;
+            if (Settings.Default.Theme == "Dark") this.RequestedTheme = ApplicationTheme.Dark;
         }
 
         /// <summary>
@@ -47,6 +50,10 @@ namespace MyLenses
             {
                 // Frame erstellen, der als Navigationskontext fungiert und zum Parameter der ersten Seite navigieren
                 rootFrame = new Frame();
+
+                ApplicationLanguages.PrimaryLanguageOverride = Settings.Default.Language;
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForViewIndependentUse().Reset();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

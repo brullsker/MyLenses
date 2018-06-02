@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/contact-lens (1).svg
+/contact-lens - Kopie.svg
+/contact-lens.svg
+/logo.png

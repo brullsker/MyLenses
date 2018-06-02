@@ -9,30 +9,25 @@
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d"
     DataContext="{StaticResource settings}"
-    extensions:TitleBarExtensions.BackgroundColor="#1f1f1f"
-    extensions:TitleBarExtensions.ButtonBackgroundColor="#1f1f1f"
-    extensions:TitleBarExtensions.ButtonForegroundColor="White"
-    extensions:TitleBarExtensions.ForegroundColor="White">
+    extensions:StatusBarExtensions.IsVisible="False">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <CommandBar Style="{ThemeResource CommandBarRevealStyle}" VerticalContentAlignment="Center" DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed" Background="{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}">
+            <CommandBar VerticalContentAlignment="Center" DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed">
+                <AppBarToggleButton x:Name="EditButton" x:Uid="EditButton" Style="{StaticResource AppBarToggleButtonTabStyle}" Icon="Edit" ToolTipService.ToolTip="Edit properties of your current lenses" Click="AppBarButton_Click" LabelPosition="Collapsed"/>
+                <AppBarSeparator/>
+                <AppBarToggleButton x:Name="SettingsButton" x:Uid="SettingsButton" Style="{StaticResource AppBarToggleButtonTabStyle}" LabelPosition="Collapsed" Icon="Setting" ToolTipService.ToolTip="App settings" Click="AppBarButton_Click_1"/>
                 <CommandBar.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <AppBarToggleButton x:Name="SettingsButton" x:Uid="SettingsButton" LabelPosition="Collapsed" Icon="Setting" ToolTipService.ToolTip="App settings" Click="AppBarButton_Click_1"/>
-                        <AppBarToggleButton x:Name="EditButton" x:Uid="EditButton" Icon="Edit" ToolTipService.ToolTip="Edit properties of your current lenses" Click="AppBarButton_Click" LabelPosition="Collapsed"/>
-                        <AppBarSeparator/>
-                        <TextBlock Text="Current lenses" x:Uid="AppHeaderText" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" Margin="12,0" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <TextBlock Text="Current lenses" x:Uid="AppHeaderText" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" Margin="12,0"/>
                 </CommandBar.Content>
             </CommandBar>
 
-            <SplitView CompactPaneLength="132" Grid.Row="1" x:Name="SettingsEditSplitView" DisplayMode="Inline" PanePlacement="Left" OpenPaneLength="360" PaneBackground="Transparent">
-                <Grid x:Name="MainGrid" Tapped="Grid_Tapped" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Transparent">
+            <SplitView CompactPaneLength="132" Grid.Row="1" Style="{StaticResource AnimatedInlineSplitViewStyle}" x:Name="SettingsEditSplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="360" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                <Grid x:Name="MainGrid" Tapped="Grid_Tapped" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -45,6 +40,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+
 
                     <TextBlock Text="Success!" x:Name="SuccessTextTemplate" x:Uid="SuccessText" Visibility="Collapsed"/>
                     <TextBlock Text="Lens successfully updated" x:Name="EditSuccessTextTemplate" x:Uid="EditText" Visibility="Collapsed"/>
@@ -79,7 +75,7 @@
 
                 <SplitView.Pane>
                     <Grid>
-                        <ScrollViewer x:Name="EditGrid" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto" Background="{ThemeResource SystemControlChromeLowAcrylicElementBrush}">
+                        <ScrollViewer x:Name="EditGrid" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto">
                             <StackPanel Orientation="Vertical" Margin="12">
                                 <TextBlock Text="EDIT LENSES" x:Uid="EditLens_HeaderText" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" FontSize="20"/>
                                 <TextBlock Text="Type" x:Uid="LensTypeText" Style="{StaticResource BaseTextBlockStyle}" Margin="0,12,0,6"/>
@@ -122,7 +118,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button HorizontalAlignment="Stretch" Padding="0" Margin="0,0,6,0" Height="64" BorderThickness="0" x:Name="DiscardChangesButton" Click="DiscardChangesButton_Click" Style="{ThemeResource ButtonRevealStyle}">
+                                    <Button HorizontalAlignment="Stretch" Padding="0" Margin="0,0,6,0" Height="64" BorderThickness="0" x:Name="DiscardChangesButton" Click="DiscardChangesButton_Click">
                                         <Border Height="64" Width="162" Background="{ThemeResource ButtonBackgroundThemeBrush}">
                                             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" HorizontalAlignment="Center"/>
@@ -130,7 +126,7 @@
                                             </StackPanel>
                                         </Border>
                                     </Button>
-                                    <Button RequestedTheme="Dark" BorderThickness="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="6,0,0,0" Height="64" Padding="0" x:Name="AcceptChangesButton" Click="AcceptChangesButton_Click" Style="{ThemeResource ButtonRevealStyle}">
+                                    <Button RequestedTheme="Dark" BorderThickness="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="6,0,0,0" Height="64" Padding="0" x:Name="AcceptChangesButton" Click="AcceptChangesButton_Click">
                                         <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="64" Width="162">
                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0E7;"/>
@@ -143,12 +139,8 @@
                         </ScrollViewer>
 
                         <Grid x:Name="SettingsGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto" Width="310" Background="{ThemeResource SystemControlChromeLowAcrylicElementBrush}">
-                                <StackPanel Orientation="Vertical" Margin="12,12,12,12">
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto">
+                                <StackPanel Orientation="Vertical" Margin="12,12,62,12">
                                     <TextBlock Text="APP SETTINGS" x:Uid="AppSettingsHeaderText" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" FontSize="20"/>
                                     <TextBlock Text="Theme" x:Uid="AppSettingsThemeText" Style="{StaticResource BaseTextBlockStyle}" Margin="0,12,0,6"/>
                                     <ComboBox x:Name="ThemeBox" HorizontalAlignment="Stretch" SelectionChanged="ComboBox_SelectionChanged">
@@ -169,18 +161,18 @@
                                     </ComboBox>
                                 </StackPanel>
                             </ScrollViewer>
-                            <SplitView Grid.Column="1" HorizontalAlignment="Right" DisplayMode="CompactInline" CompactPaneLength="50" PanePlacement="Left" OpenPaneLength="360" x:Name="AboutSplitView" PaneBackground="{ThemeResource SystemControlAccentDark1AcrylicElementAccentDark1Brush}" PaneClosing="AboutSplitView_PaneClosing">
+                            <SplitView DisplayMode="CompactOverlay" CompactPaneLength="50" PanePlacement="Right" OpenPaneLength="360" x:Name="AboutSplitView" HorizontalAlignment="Right" PaneBackground="{ThemeResource ButtonBackgroundThemeBrush}" PaneClosing="AboutSplitView_PaneClosing">
                                 <SplitView.Pane>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
                                             <ColumnDefinition/>
+                                            <ColumnDefinition Width="50"/>
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton Background="{ThemeResource ToggleButtonBackgroundThemeBrush}" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" x:Name="AboutToggleButton" Style="{ThemeResource ToggleButtonRevealStyle}">
+                                        <ToggleButton BorderThickness="0" VerticalAlignment="Stretch" Grid.Column="1" HorizontalAlignment="Stretch" Padding="0" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" x:Name="AboutToggleButton">
                                             <controls:LayoutTransformControl>
                                                 <controls:LayoutTransformControl.Transform>
                                                     <TransformGroup>
-                                                        <RotateTransform Angle="90"/>
+                                                        <RotateTransform Angle="-90"/>
                                                     </TransformGroup>
                                                 </controls:LayoutTransformControl.Transform>
                                                 <StackPanel Orientation="Vertical" x:Name="AboutButton" Width="68" Height="38">
@@ -189,16 +181,17 @@
                                                 </StackPanel>
                                             </controls:LayoutTransformControl>
                                         </ToggleButton>
-                                        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0" Grid.Column="1"/>
-                                        <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto"  Grid.Column="1">
-                                            <Grid RequestedTheme="Dark">
+                                        <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                        <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto">
+                                            <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}" RequestedTheme="Dark">
+                                                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.1"/>
                                                 <StackPanel Orientation="Vertical" Margin="12">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition/>
                                                             <ColumnDefinition Width="160"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Margin="0,0,6,0">
+                                                        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Margin="0,0,6,0">
                                                             <Image Source="/Assets/SmallTile.scale-200.png" x:Name="About_Logo"/>
                                                         </Border>
                                                         <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,0,0">
@@ -209,9 +202,9 @@
                                                     <TextBlock Text="Developer" x:Uid="About_DevHeaderText" Style="{StaticResource BaseTextBlockStyle}" Margin="0,12,0,6"/>
                                                     <TextBlock Text="&#xA9; 2018 by brullsker" Style="{StaticResource BodyTextBlockStyle}"/>
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6">
-                                                        <Button Content="E-Mail" Width="90" BorderThickness="0" x:Name="DevEmailBtn" Click="DevContactBtn_Click" Style="{ThemeResource ButtonRevealStyle}"/>
-                                                        <Button Content="Telegram" Margin="6,0" Width="90" BorderThickness="0" x:Name="DevTgBtn" Click="DevContactBtn_Click" Style="{ThemeResource ButtonRevealStyle}"/>
-                                                        <Button Content="Twitter" Width="90" BorderThickness="0" x:Name="DevTwitterBtn" Click="DevContactBtn_Click" Style="{ThemeResource ButtonRevealStyle}"/>
+                                                        <Button Content="E-Mail" Width="90" BorderThickness="0" x:Name="DevEmailBtn" Click="DevContactBtn_Click"/>
+                                                        <Button Content="Telegram" Margin="6,0" Width="90" BorderThickness="0" x:Name="DevTgBtn" Click="DevContactBtn_Click"/>
+                                                        <Button Content="Twitter" Width="90" BorderThickness="0" x:Name="DevTwitterBtn" Click="DevContactBtn_Click"/>
                                                     </StackPanel>
                                                     <MenuFlyoutSeparator/>
                                                     <Grid HorizontalAlignment="Stretch" Margin="0,6">
@@ -308,7 +301,7 @@
                                                             </GridView>
                                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="6">
                                                                 <TextBlock Text="Want something individual?" HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" x:Uid="DP_NothingForYouText"/>
-                                                                <Button Background="Transparent" Padding="0" BorderThickness="0" Margin="0,4,0,0" HorizontalAlignment="Center" Style="{ThemeResource ButtonRevealStyle}">
+                                                                <Button Background="Transparent" Padding="0" BorderThickness="0" Margin="0,4,0,0" HorizontalAlignment="Center">
                                                                     <Grid Padding="0" Margin="0">
                                                                         <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0" Opacity="0.125"/>
                                                                         <StackPanel Orientation="Horizontal" Margin="8,4">
